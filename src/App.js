@@ -17,7 +17,7 @@ import './App.css';
 
     constructor(){
       super();
-      this.state = {color: "white", mousedown: false};
+      this.state = {color: "white", mousedown: false, canvasColor: "black"};
     };
 
 chooseColor=(id)=>{
@@ -33,11 +33,17 @@ chooseColor=(id)=>{
 
  startPaint = () =>{
     this.setState({mousedown: true})
-   }
+  }
 
  stopPaint = () =>{
   this.setState({mousedown: false})
  }
+
+ clearCanvas = () =>{
+  for (let x = 0; x < 10000; x++) {
+  document.getElementById(`canvas${x}`).style.backgroundColor = "black" 
+ }
+}
 
  randomizeColor = () => {
   colors=[]
@@ -54,9 +60,10 @@ render(){
         <div className="container">
         <div id="palette"><Palette color={this.chooseColor} setColor={colors}/></div>
         <div id='canvas' onMouseDown={()=>this.startPaint()} onMouseUp={()=>this.stopPaint()}>
-          <Canvas color={this.fillColor}/></div>
+          <Canvas color={this.fillColor} canvasColor={this.clearCanvas}/></div>
       </div>
-      <button onClick={() =>this.randomizeColor()}>randomize</button>
+      <button onClick={() => this.randomizeColor()}>randomize</button>
+      <button onClick= {() => this.clearCanvas()}>clear</button>
       </div>
     )
   }
